@@ -85,6 +85,12 @@ You can install the `node-rdkafka` module like any other module:
 npm install node-rdkafka
 ```
 
+There is an option to provide a custom URL for downloading the librdkafka library on Windows if the default nuget package is not accessible. The ```{}``` will be replaced with the librdkafka version found in package.json file:
+
+```
+npm install node-rdkafka --librdkafkaURL='https://www.nuget.org/api/v2/package/librdkafka.redist/{}'
+```
+
 To use the module, you must `require` it.
 
 ```js

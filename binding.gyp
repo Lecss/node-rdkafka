@@ -3,6 +3,7 @@
     # may be redefined in command line on configuration stage
     # "BUILD_LIBRDKAFKA%": "<!(echo ${BUILD_LIBRDKAFKA:-1})"
     "BUILD_LIBRDKAFKA%": "<!(node ./util/get-env.js BUILD_LIBRDKAFKA 1)",
+    "librdkafkaUrl": "librdURL%": "https://www.nuget.org/api/v2/package/librdkafka.redist/{}",
   },
   "targets": [
     {
@@ -39,7 +40,7 @@
                   'deps/precompiled/librdkafkacpp.lib'
                 ],
                 'message': 'Getting librdkafka from nuget',
-                'action': ['python', '<@(_inputs)']
+                'action': ['python', '<@(_inputs)', '--librdkafkaUrl', '<@(librdkafkaUrl)']
               }
             ],
             'cflags_cc' : [

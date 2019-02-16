@@ -1,4 +1,10 @@
 librdkafkaVersion = ''
+
+# read url for downloading librdkafka; defaults to nuget or user provided url
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--librdkafkaURL', type=str)
+
 # read librdkafka version from package.json
 import json
 with open('../package.json') as f:
@@ -9,8 +15,8 @@ depsPrecompiledDir = '../deps/precompiled'
 depsIncludeDir = '../deps/include'
 buildReleaseDir = 'Release'
 
+librdkafkaURL = parser.parse_args().librdkafkaURL.format(librdkafkaVersion)
 # alternative: 'https://api.nuget.org/v3-flatcontainer/librdkafka.redist/{}/librdkafka.redist.{}.nupkg'.format(librdkafkaVersion, librdkafkaVersion)
-librdkafkaNugetUrl = 'https://www.nuget.org/api/v2/package/librdkafka.redist/{}'.format(librdkafkaVersion)
 outputDir = 'librdkafka.redist'
 outputFile = outputDir + '.zip'
 dllPath = outputDir + '/runtimes/win{}-x64/native'.format(librdkafkaWinSufix)
@@ -19,7 +25,7 @@ includePath = outputDir + '/build/native/include/librdkafka'
 
 # download librdkafka from nuget
 import urllib2
-filedata = urllib2.urlopen(librdkafkaNugetUrl)
+filedata = urllib2.urlopen(librdkafkaURL)
 datatowrite = filedata.read()
 with open(outputFile, 'wb') as f:
     f.write(datatowrite)
